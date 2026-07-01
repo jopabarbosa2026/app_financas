@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Meu Financeiro
 
-## Getting Started
+App de gestão financeira pessoal: registre receitas e despesas, categorize, acompanhe um
+dashboard mensal com gráficos e exporte seus dados em CSV.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Next.js (App Router) · TypeScript · Tailwind CSS · shadcn/ui · Supabase (Auth + Postgres) ·
+Recharts
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Rodando localmente
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Instale as dependências:
+   ```bash
+   npm install
+   ```
+2. Crie um projeto em [supabase.com/dashboard](https://supabase.com/dashboard).
+3. No **SQL Editor** do projeto, rode todo o conteúdo de [`supabase/schema.sql`](supabase/schema.sql).
+   Isso cria as tabelas `categories`/`transactions`, as políticas de RLS e as categorias padrão.
+4. Copie `.env.local.example` para `.env.local` e preencha com as credenciais do seu projeto
+   (Project Settings → API → Project URL / anon public key).
+5. Rode o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+6. Acesse [http://localhost:3000](http://localhost:3000).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> Por padrão o Supabase exige confirmação de e-mail no cadastro. Para testes locais mais
+> rápidos, você pode desativar isso em **Authentication → Sign In / Providers → Email →
+> Confirm email** (reative antes de ir para produção com usuários reais).
 
-## Learn More
+## Deploy na Vercel
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Acesse [vercel.com/new](https://vercel.com/new) e importe o repositório do GitHub
+   (`jopabarbosa2026/app_financas`).
+2. Em **Environment Variables**, adicione:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+3. Clique em **Deploy**.
+4. Depois do primeiro deploy, no painel do Supabase vá em **Authentication → URL Configuration**
+   e adicione a URL da Vercel (ex: `https://seu-app.vercel.app`) em **Site URL** e
+   **Redirect URLs**, para os links de confirmação de e-mail funcionarem em produção.

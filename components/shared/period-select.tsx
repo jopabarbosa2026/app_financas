@@ -29,7 +29,7 @@ export function PeriodSelect({ month, year }: { month: number; year: number }) {
     <div className="flex gap-2">
       <Select value={String(month)} onValueChange={(v) => updateParam("month", v)}>
         <SelectTrigger className="w-[150px]">
-          <SelectValue />
+          <SelectValue>{(v: string) => MONTH_NAMES[Number(v) - 1]}</SelectValue>
         </SelectTrigger>
         <SelectContent>
           {MONTH_NAMES.map((name, i) => (

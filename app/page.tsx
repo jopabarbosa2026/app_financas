@@ -55,10 +55,12 @@ export default function LandingPage() {
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
         <span className="text-lg font-semibold tracking-tight">Meu Financeiro</span>
         <nav className="flex items-center gap-2">
-          <Button variant="ghost" render={<Link href="/login" />}>
+          <Button variant="ghost" nativeButton={false} render={<Link href="/login" />}>
             Entrar
           </Button>
-          <Button render={<Link href="/signup" />}>Criar conta grátis</Button>
+          <Button nativeButton={false} render={<Link href="/signup" />}>
+            Criar conta grátis
+          </Button>
         </nav>
       </header>
 
@@ -72,10 +74,15 @@ export default function LandingPage() {
             seu dinheiro com um dashboard simples e visual.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button size="lg" render={<Link href="/signup" />}>
+            <Button size="lg" nativeButton={false} render={<Link href="/signup" />}>
               Começar agora
             </Button>
-            <Button size="lg" variant="outline" render={<Link href="/login" />}>
+            <Button
+              size="lg"
+              variant="outline"
+              nativeButton={false}
+              render={<Link href="/login" />}
+            >
               Já tenho conta
             </Button>
           </div>

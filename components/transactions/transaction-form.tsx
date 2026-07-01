@@ -130,7 +130,9 @@ export function TransactionForm({
                 }}
               >
                 <SelectTrigger>
-                  <SelectValue />
+                  <SelectValue>
+                    {(v: string) => (v === "receita" ? "Receita" : "Despesa")}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="receita">Receita</SelectItem>
@@ -145,7 +147,9 @@ export function TransactionForm({
                 onValueChange={(v) => setValue("category_id", v ?? "")}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Selecione" />
+                  <SelectValue placeholder="Selecione">
+                    {(v: string) => categories.find((c) => c.id === v)?.name}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {filteredCategories.map((c) => (

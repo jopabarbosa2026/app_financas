@@ -51,7 +51,11 @@ export function FiltersBar({
         onValueChange={(v) => updateParam("categoria", v === "all" ? null : v)}
       >
         <SelectTrigger className="w-full sm:w-[180px]">
-          <SelectValue placeholder="Categoria" />
+          <SelectValue placeholder="Categoria">
+            {(v: string) =>
+              v === "all" ? "Todas as categorias" : categories.find((c) => c.id === v)?.name
+            }
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todas as categorias</SelectItem>

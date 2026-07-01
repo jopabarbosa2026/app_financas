@@ -60,7 +60,8 @@ export function TransactionTable({
 
   return (
     <>
-      <div className="overflow-x-auto rounded-md border">
+      {/* Desktop/tablet: tabela completa */}
+      <div className="hidden overflow-x-auto rounded-md border md:block">
         <Table>
           <TableHeader>
             <TableRow>
@@ -115,6 +116,53 @@ export function TransactionTable({
             ))}
           </TableBody>
         </Table>
+      </div>
+
+      {/* Mobile: lista de cards */}
+      <div className="flex flex-col gap-3 md:hidden">
+        {transactions.map((t) => (
+          <div key={t.id} className="flex flex-col gap-2 rounded-md border p-3">
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex flex-col">
+                <span className="font-medium">{t.description}</span>
+                <span className="text-sm text-muted-foreground">
+                  {t.categories?.name ?? "-"} · {formatDate(t.date)}
+                </span>
+              </div>
+              <span
+                className={`shrink-0 font-medium ${
+                  t.type === "receita" ? "text-emerald-600" : "text-red-600"
+                }`}
+              >
+                {t.type === "receita" ? "+" : "-"} {formatCurrency(Number(t.amount))}
+              </span>
+            </div>
+            <div className="flex items-center justify-between">
+              <Badge variant={t.type === "receita" ? "default" : "destructive"}>
+                {t.type === "receita" ? "Receita" : "Despesa"}
+              </Badge>
+              <div className="flex gap-1">
+                <TransactionForm
+                  categories={categories}
+                  transaction={t}
+                  trigger={
+                    <Button variant="ghost" size="icon" aria-label="Editar">
+                      <Pencil className="size-4" />
+                    </Button>
+                  }
+                />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Excluir"
+                  onClick={() => setDeletingId(t.id)}
+                >
+                  <Trash2 className="size-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
 
       <AlertDialog open={deletingId !== null} onOpenChange={(o) => !o && setDeletingId(null)}>
