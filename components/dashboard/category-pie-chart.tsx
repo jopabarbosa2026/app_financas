@@ -15,13 +15,19 @@ const COLORS = [
   "#6b7280",
 ];
 
-export type CategorySlice = { name: string; value: number };
+export type CategorySlice = { name: string; value: number; color?: string };
 
-export function CategoryPieChart({ data }: { data: CategorySlice[] }) {
+export function CategoryPieChart({
+  data,
+  emptyMessage = "Nenhuma despesa registrada neste período.",
+}: {
+  data: CategorySlice[];
+  emptyMessage?: string;
+}) {
   if (data.length === 0) {
     return (
       <div className="flex h-64 items-center justify-center text-sm text-muted-foreground">
-        Nenhuma despesa registrada neste período.
+        {emptyMessage}
       </div>
     );
   }
@@ -38,7 +44,7 @@ export function CategoryPieChart({ data }: { data: CategorySlice[] }) {
           paddingAngle={2}
         >
           {data.map((entry, index) => (
-            <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
+            <Cell key={entry.name} fill={entry.color ?? COLORS[index % COLORS.length]} />
           ))}
         </Pie>
         <Tooltip formatter={(value) => formatCurrency(Number(value))} />

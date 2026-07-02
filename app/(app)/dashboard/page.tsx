@@ -35,6 +35,11 @@ export default async function DashboardPage({
     value,
   }));
 
+  const receitaDespesaData: CategorySlice[] = [
+    ...(totalReceitas > 0 ? [{ name: "Receitas", value: totalReceitas, color: "#16a34a" }] : []),
+    ...(totalDespesas > 0 ? [{ name: "Despesas", value: totalDespesas, color: "#dc2626" }] : []),
+  ];
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -44,14 +49,28 @@ export default async function DashboardPage({
 
       <SummaryCards totalReceitas={totalReceitas} totalDespesas={totalDespesas} />
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Despesas por categoria</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CategoryPieChart data={categoryData} />
-        </CardContent>
-      </Card>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Receitas x Despesas</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CategoryPieChart
+              data={receitaDespesaData}
+              emptyMessage="Nenhuma transação registrada neste período."
+            />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Despesas por categoria</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CategoryPieChart data={categoryData} />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
