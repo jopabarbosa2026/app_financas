@@ -17,6 +17,11 @@ export async function signIn(
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
+    if (error.code === "email_not_confirmed") {
+      return {
+        error: "Confirme seu e-mail antes de entrar. Verifique sua caixa de entrada (e o spam).",
+      };
+    }
     return { error: "E-mail ou senha inválidos." };
   }
 
@@ -38,7 +43,15 @@ export async function signUp(
   const { data, error } = await supabase.auth.signUp({ email, password });
 
   if (error) {
-    return { error: "Não foi possível criar a conta. Tente outro e-mail." };
+    if (error.code === "email_exists" || error.code === "user_already_exists") {
+      return { error: "Já existe uma conta com esse e-mail. Tente entrar ou recuperar a senha." };
+    }
+    if (error.code === "over_email_send_rate_limit") {
+      return {
+        error: "Muitas tentativas em pouco tempo. Aguarde alguns minutos e tente novamente.",
+      };
+    }
+    return { error: "Não foi possível criar a conta. Tente novamente em instantes." };
   }
 
   if (!data.session) {
