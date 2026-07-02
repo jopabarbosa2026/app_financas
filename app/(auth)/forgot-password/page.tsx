@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import Link from "next/link";
-import { signIn, type AuthState } from "@/lib/actions/auth";
+import { requestPasswordReset, type AuthState } from "@/lib/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,14 +16,16 @@ import {
 
 const initialState: AuthState = { error: null };
 
-export default function LoginPage() {
-  const [state, formAction, pending] = useActionState(signIn, initialState);
+export default function ForgotPasswordPage() {
+  const [state, formAction, pending] = useActionState(requestPasswordReset, initialState);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Entrar</CardTitle>
-        <CardDescription>Acesse sua conta para controlar suas finanças.</CardDescription>
+        <CardTitle>Esqueceu a senha?</CardTitle>
+        <CardDescription>
+          Informe seu e-mail e enviaremos um link para você redefinir a senha.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <form action={formAction} className="flex flex-col gap-4">
@@ -31,29 +33,20 @@ export default function LoginPage() {
             <Label htmlFor="email">E-mail</Label>
             <Input id="email" name="email" type="email" placeholder="voce@email.com" required />
           </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between">
-              <Label htmlFor="password">Senha</Label>
-              <Link
-                href="/forgot-password"
-                className="text-sm text-muted-foreground underline underline-offset-4"
-              >
-                Esqueceu a senha?
-              </Link>
-            </div>
-            <Input id="password" name="password" type="password" required />
-          </div>
           {state.error && (
             <p className="text-sm text-destructive">{state.error}</p>
           )}
+          {state.message && (
+            <p className="text-sm text-emerald-600">{state.message}</p>
+          )}
           <Button type="submit" disabled={pending} className="w-full">
-            {pending ? "Entrando..." : "Entrar"}
+            {pending ? "Enviando..." : "Enviar link de recuperação"}
           </Button>
         </form>
         <p className="mt-4 text-center text-sm text-muted-foreground">
-          Não tem conta?{" "}
-          <Link href="/signup" className="underline underline-offset-4">
-            Criar conta
+          Lembrou a senha?{" "}
+          <Link href="/login" className="underline underline-offset-4">
+            Entrar
           </Link>
         </p>
       </CardContent>
