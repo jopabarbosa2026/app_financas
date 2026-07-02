@@ -21,31 +21,37 @@ const features = [
     icon: Wallet,
     title: "Controle total",
     description: "Registre receitas e despesas em segundos e categorize cada transação.",
+    color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-400",
   },
   {
     icon: BarChart3,
     title: "Dashboard visual",
     description: "Veja o resumo do mês e a distribuição de gastos por categoria em gráficos.",
+    color: "bg-blue-100 text-blue-600 dark:bg-blue-500/15 dark:text-blue-400",
   },
   {
     icon: Filter,
     title: "Filtros e busca",
     description: "Encontre qualquer transação por período, categoria ou descrição.",
+    color: "bg-violet-100 text-violet-600 dark:bg-violet-500/15 dark:text-violet-400",
   },
   {
     icon: Download,
     title: "Exportação em CSV",
     description: "Baixe seus dados filtrados para usar em planilhas ou relatórios.",
+    color: "bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400",
   },
   {
     icon: ShieldCheck,
     title: "Seus dados, só seus",
     description: "Autenticação segura e cada conta só acessa as próprias transações.",
+    color: "bg-rose-100 text-rose-600 dark:bg-rose-500/15 dark:text-rose-400",
   },
   {
     icon: Smartphone,
     title: "Funciona em qualquer tela",
     description: "Layout responsivo para usar no computador ou no celular.",
+    color: "bg-cyan-100 text-cyan-600 dark:bg-cyan-500/15 dark:text-cyan-400",
   },
 ];
 
@@ -90,10 +96,12 @@ export default function LandingPage() {
 
         <section className="mx-auto w-full max-w-6xl px-6 pb-24">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map(({ icon: Icon, title, description }) => (
-              <Card key={title}>
+            {features.map(({ icon: Icon, title, description, color }) => (
+              <Card key={title} className="transition-shadow hover:shadow-md">
                 <CardHeader>
-                  <Icon className="mb-2 size-6 text-primary" />
+                  <div className={`mb-2 flex size-11 items-center justify-center rounded-lg ${color}`}>
+                    <Icon className="size-5" />
+                  </div>
                   <CardTitle className="text-base">{title}</CardTitle>
                   <CardDescription>{description}</CardDescription>
                 </CardHeader>
